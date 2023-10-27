@@ -51,13 +51,18 @@
                         laudantium quae debitis veniam et? Praesentium, odit quia perferendis veritatis aspernatur rem
                         culpa commodi repellat incidunt quam magni, a quos perspiciatis, autem distinctio? Nisi saepe
                         amet minus quod minima! Vel facilis et soluta aspernatur provident! Magnam, laboriosam vero?</p>
+                        <div class="items-btns">
+                            <button class="delete-btn">Delete</button>
+                            <button class="complete-btn">Complete</button>
+
+                        </div>
                 </div>
             </div>
         </section>
         <section id="all-todos">
             <h2>All</h2>
             <div class="todos">
-                <div class="todo-item">
+                <div class="todo-item completed-item">
                     <div class="item-header">
                         <hr>
                         <div class="item-details">
@@ -80,6 +85,33 @@
         </section>
 
     </main>
+
+    <aside>
+        <!--Heading-->
+        <h1>Task:</h1>
+        <!--Tittle and Description Inputs-->
+        <textarea name="title-textarea" cols="30" rows="10" placeholder="Title"></textarea><br>
+        <textarea name="description-textarea"  cols="30" rows="10" placeholder="Description"></textarea><br><br>
+        <!--start date input-->
+        <label for="start date">Start date</label>
+        <input type="date" name="start date" id="start" ><br><br>
+        <!--End date input-->
+        <label for="end date">End date</label>
+        <input type="date" name="end date" id="End">
+        <!--Priority-->
+        <div class="priority-container">
+            <h2>Priority:</h2>
+            <!-- Priority Switch -->
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+          <!-- Buttons -->
+        <button id="delet">Cancel</button>
+        <button id="save">Save</button>
+       
+    </aside>
 
     <script src="scripte.js"></script>
 </body>
