@@ -226,21 +226,28 @@ input:checked + .slider:before {
   transform: translateX(35px);
 }
 
-#delet {
-  background-color: rgb(242, 242, 242);
-  border-radius: 10px;
-  width: 220px;
-  height: 70.95px;
-  border: 1px solid #aaaaaa;
-  margin-right: 10px;
-  margin-left: 10px;
+aside .aside-btns{
+    display: flex;
+    gap: 10%;
+    justify-content: center;
 }
 
-#save {
+aside .aside-btns button{
+  width: 40%;
+  border-radius: 10px;
+  height: 3rem;
+}
+
+.aside-cancel-btn {
+  background-color: rgb(242, 242, 242);
+  border-radius: 10px;
+  width: 40%;
+  height: 7%;
+  border: 1px solid #aaaaaa;
+}
+
+.aside-save-btn {
   background-color: lightblue;
   border: none;
-  border-radius: 10px;
-  width: 220px;
-  height: 70.95px;
   color: white;
 }

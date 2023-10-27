@@ -14,25 +14,7 @@
         <section id="priorities">
             <h2>Priorities</h2>
             <div class="todos">
-                <div class="todo-item">
-                    <div class="item-header">
-                        <hr>
-                        <div class="item-details">
-                            <h3>Todo Title</h3>
-                            <div class="details">
-                                <h4>15-10-2023 | 15-10-2023 | Priority</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat perspiciatis incidunt odit
-                        dolore illo! Ea modi sit vitae quibusdam deserunt ratione explicabo saepe eaque eum provident
-                        nisi neque ut error illo reprehenderit, voluptatibus molestiae obcaecati. Dignissimos, molestiae
-                        veritatis quae corporis ratione soluta quibusdam aperiam vitae eveniet totam nam quaerat natus,
-                        fugiat sunt vero repellat, facere deleniti excepturi voluptas aut. Asperiores repellendus ad
-                        laudantium quae debitis veniam et? Praesentium, odit quia perferendis veritatis aspernatur rem
-                        culpa commodi repellat incidunt quam magni, a quos perspiciatis, autem distinctio? Nisi saepe
-                        amet minus quod minima! Vel facilis et soluta aspernatur provident! Magnam, laboriosam vero?</p>
-                </div>
+
                 <div class="todo-item">
                     <div class="item-header">
                         <hr>
@@ -51,17 +33,24 @@
                         laudantium quae debitis veniam et? Praesentium, odit quia perferendis veritatis aspernatur rem
                         culpa commodi repellat incidunt quam magni, a quos perspiciatis, autem distinctio? Nisi saepe
                         amet minus quod minima! Vel facilis et soluta aspernatur provident! Magnam, laboriosam vero?</p>
-                        <div class="items-btns">
-                            <button class="delete-btn">Delete</button>
-                            <button class="complete-btn">Complete</button>
+                    <div class="items-btns">
+                        <button class="delete-btn">Delete</button>
+                        <button class="complete-btn">Complete</button>
 
-                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <!--  -->
         <section id="all-todos">
             <h2>All</h2>
+
+        </section>
+        <!--  -->
+        <section>
+            <h2>Completed</h2>
             <div class="todos">
+                <div class="todos">
                 <div class="todo-item completed-item">
                     <div class="item-header">
                         <hr>
@@ -80,7 +69,13 @@
                         laudantium quae debitis veniam et? Praesentium, odit quia perferendis veritatis aspernatur rem
                         culpa commodi repellat incidunt quam magni, a quos perspiciatis, autem distinctio? Nisi saepe
                         amet minus quod minima! Vel facilis et soluta aspernatur provident! Magnam, laboriosam vero?</p>
+                        <div class="items-btns">
+                            <button class="delete-btn">Delete</button>
+                            <button class="complete-btn" disabled>Complete</button>
+    
+                        </div>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -91,10 +86,10 @@
         <h1>Task:</h1>
         <!--Tittle and Description Inputs-->
         <textarea name="title-textarea" cols="30" rows="10" placeholder="Title"></textarea><br>
-        <textarea name="description-textarea"  cols="30" rows="10" placeholder="Description"></textarea><br><br>
+        <textarea name="description-textarea" cols="30" rows="10" placeholder="Description"></textarea><br><br>
         <!--start date input-->
         <label for="start date">Start date</label>
-        <input type="date" name="start date" id="start" ><br><br>
+        <input type="date" name="start date" id="start"><br><br>
         <!--End date input-->
         <label for="end date">End date</label>
         <input type="date" name="end date" id="End">
@@ -107,10 +102,12 @@
                 <span class="slider round"></span>
             </label>
         </div>
-          <!-- Buttons -->
-        <button id="delet">Cancel</button>
-        <button id="save">Save</button>
-       
+        <!-- Buttons -->
+        <div class="aside-btns">
+            <button class="aside-cancel-btn">Cancel</button>
+            <button class="aside-save-btn">Save</button>
+        </div>
+
     </aside>
 
     <script src="scripte.js"></script>
