@@ -19,7 +19,7 @@ main {
 }
 .todos .todo-item {
   width: 100%;
-  box-shadow: 0 0 10px lightgray;
+  box-shadow: 0 0 4px lightgray;
   border-radius: 7px;
   padding: 1.5%;
   margin-bottom: 3%;
@@ -43,7 +43,7 @@ main {
   margin-bottom: 5%;
 }
 
-.todos .todo-item .item-header .item-details .details h4 {
+.todos .todo-item .item-header .item-details h4 {
   margin: 0;
   color: #6e6e6e;
 }
@@ -65,12 +65,12 @@ main {
 }
 
 
-.todos .todo-item .items-btns .delete-btn{
+.todos .todo-item .items-btns .cancel-btn{
     background-color: #f08080;
     border: 1px solid lightcoral;
 }
 
-.todos .todo-item .items-btns .delete-btn:hover{
+.todos .todo-item .items-btns .cancel-btn:hover{
     box-shadow: 0 0 10px lightcoral;
 }
 
@@ -86,12 +86,15 @@ main {
 .todos .todo-item :where(p, button, .items-btns) {
   width: 50%;
   position: absolute;
-  opacity: 0;
+  top: 0;
+  margin-top: -100%;
+  opacity: 1;
 }
 
 .todos .todo-item:hover :where(p, button, .items-btns) {
   position: relative;
   width: 100%;
+  margin: 2% 0;
   opacity: 1;
 }
 
@@ -122,40 +125,35 @@ aside {
 }
 
 h1 {
-  margin-bottom: 30px;
-  font-size: 40px;
+  margin-bottom: 10%;
+  font-size: 2rem;
   color: #535252;
 }
 
 h2 {
   font-family: "Inter", sans-serif;
-  margin-bottom: 30px;
-  font-size: 30px;
+  margin-bottom: 10%;
+  font-size: 1.5rem;
   color: #535252;
-  margin-right: 10px;
 }
 
 /* Tittle input */
 textarea {
   border: 2px solid #aaaaaa;
+  background-color: rgb(242, 242, 242);
+  width: 100%;
+  border-radius: 10px;
+  padding: 2%;
 }
 
 textarea[name="title-textarea"] {
-  background-color: rgba(242, 242, 242, 1);
-  width: 100%;
   height: 10%;
-  padding: 2%;
   margin-bottom: 25px;
-  border-radius: 10px;
 }
 
 /*  Description input */
 textarea[name="description-textarea"] {
-  background-color: rgba(242, 242, 242);
-  width: 100%;
   height: 20%;
-  border-radius: 10px;
-  padding: 2%;
 }
 
 /* used Flex to the swotch apear next to the h2 priority */
@@ -182,7 +180,7 @@ input[type="date"] {
 
 .priority-container {
     margin-top: 5%;
-    margin-bottom: 35%;
+    margin-bottom: 10%;
 }
 
 /* Switch styling */
