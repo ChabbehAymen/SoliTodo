@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <h1>Todo</h1>
+        <section id="priorities">
+            <h2>Priorities</h2>
+            <div class="todos priority-todos">
+
+               
+            </div>
+        </section>
+        <!--  -->
+        <section id="all-todos">
+            <h2>All</h2>
+            <div class="todos all-todos"></div>
+
+        </section>
+        <!--  -->
+        <section>
+            <h2>Completed</h2>
+            <div class="todos completed-todos">
+                
+            </div>
+            </div>
+        </section>
+
+    </main>
+
+    <aside>
+        <!--Heading-->
+        <h1>Task:</h1>
+        <!--Tittle and Description Inputs-->
+        <textarea name="title-textarea" cols="30" rows="10" placeholder="Title"></textarea><br>
+        <textarea name="description-textarea" cols="30" rows="10" placeholder="Description"></textarea><br><br>
+        <!--start date input-->
+        <label for="start date">Start date</label>
+        <input type="date" name="start date" id="start"><br><br>
+        <!--End date input-->
+        <label for="end date">End date</label>
+        <input type="date" name="end date" id="End">
+        <!--Priority-->
+        <div class="priority-container">
+            <h2>Priority:</h2>
+            <!-- Priority Switch -->
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <!-- Buttons -->
+        <div class="aside-btns">
+            <button class="aside-cancel-btn">Cancel</button>
+            <button class="aside-save-btn">Save</button>
+        </div>
+
+    </aside>
+
+    <script src="scripte.js"></script>
+</body>
