@@ -60,11 +60,18 @@ main {
     height: 2rem;
     color: white;
     border-radius: 0.4rem;
+    cursor: pointer;
+    
 }
+
 
 .todos .todo-item .items-btns .delete-btn{
     background-color: #f08080;
     border: 1px solid lightcoral;
+}
+
+.todos .todo-item .items-btns .delete-btn:hover{
+    box-shadow: 0 0 10px lightcoral;
 }
 
 .todos .todo-item .items-btns .complete-btn{
@@ -72,13 +79,17 @@ main {
     border: 1px solid lightblue;
 }
 
-.todos .todo-item :where(p, button) {
+.todos .todo-item .items-btns .complete-btn:hover{
+    box-shadow: 0 0 10px lightblue;
+}
+
+.todos .todo-item :where(p, button, .items-btns) {
   width: 50%;
   position: absolute;
   opacity: 0;
 }
 
-.todos .todo-item:hover :where(p, button) {
+.todos .todo-item:hover :where(p, button, .items-btns) {
   position: relative;
   width: 100%;
   opacity: 1;
