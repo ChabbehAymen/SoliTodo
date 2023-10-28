@@ -1,20 +1,35 @@
-let todoItemContainer = document.createElement("div");
-todoItemContainer.classList.add("todo-item");
-todoItemContainer.appendChild(itemHeader);
+let prioritiesTasks = [];
+let allTasks = [];
+let completedTasks = [];
 
-// task body
+document.querySelector('.aside-save-btn').addEventListener('click', ()=>{
+  // document.querySelector('.all-todos').appendChild();
+  allTasks.push(createTask());
+  updateUi();
 
-todoItemContainer.appendChild(discHolder);
+})
 
-// task btns
+function updateUi() {
+  let allTasksDiv = document.querySelector('.all-todos')
+  allTasksDiv.innerHTML = '';
+  allTasks.forEach((div)=>{
+    allTasksDiv.appendChild(div);
+  })
+}
 
-todoItemContainer.appendChild(taskBtnsContainer);
-let todosContainer = document.querySelector(".all-todos");
-todosContainer.appendChild(todoItemContainer);
+
 
 function createTask() {
   let todoItemContainer = document.createElement("div");
   todoItemContainer.classList.add("todo-item");
+  let taskHeader = crateItemHeader();
+  let taskBody = craeteItemDiscreption();
+  let itemBtns = createTaskBtns();
+  todoItemContainer.appendChild(taskHeader);
+  todoItemContainer.appendChild(taskBody);
+  todoItemContainer.appendChild(itemBtns);
+  todoItemContainer.id = allTasks.length;
+  return todoItemContainer;
 }
 
 function crateItemHeader() {
@@ -28,13 +43,13 @@ function crateItemHeader() {
   itemHeader.appendChild(itemDetails);
 
   // task title
-  let taskTitelText = document.createTextNode("Complete Html");
+  let taskTitelText = document.createTextNode(document.querySelector('textarea[name="title-textarea"]').value);
   let taskTitle = document.createElement("h3");
   taskTitle.appendChild(taskTitelText);
   itemDetails.appendChild(taskTitle);
 
   //task Date
-  let detailsText = document.createTextNode("15-10-2023 | 15-10-2023");
+  let detailsText = document.createTextNode(`${document.querySelector('#start').value} | ${document.querySelector('#End').value}`);
   let createDetails = document.createElement("h4");
   createDetails.appendChild(detailsText);
   itemDetails.appendChild(createDetails);
@@ -43,7 +58,7 @@ function crateItemHeader() {
 
 function craeteItemDiscreption() {
   let taskDiscText = document.createTextNode(
-    "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
+    document.querySelector('textarea[name="description-textarea"]').value
   );
   let discHolder = document.createElement("p");
   discHolder.appendChild(taskDiscText);
