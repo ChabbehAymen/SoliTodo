@@ -1,20 +1,17 @@
-let todoItemContainer = document.createElement("div");
-todoItemContainer.classList.add("todo-item");
-todoItemContainer.appendChild(itemHeader);
 
-// task body
 
-todoItemContainer.appendChild(discHolder);
-
-// task btns
-
-todoItemContainer.appendChild(taskBtnsContainer);
-let todosContainer = document.querySelector(".all-todos");
-todosContainer.appendChild(todoItemContainer);
+document.querySelector('.aside-save-btn').addEventListener('click',()=>{
+  console.log(createTask());
+  document.querySelector('.all-todos').appendChild(createTask());
+});
 
 function createTask() {
   let todoItemContainer = document.createElement("div");
   todoItemContainer.classList.add("todo-item");
+  todoItemContainer.appendChild(crateItemHeader());
+  todoItemContainer.appendChild(craeteItemDiscreption());
+  todoItemContainer.appendChild(createTaskBtns());
+  return todoItemContainer;
 }
 
 function crateItemHeader() {
@@ -54,8 +51,8 @@ function createTaskBtns() {
   let taskBtnsContainer = document.createElement("div");
   taskBtnsContainer.classList.add("items-btns");
   let cancelBtn = document.createElement("button");
-  cancelBtn.classList.add("cancel-btn");
-  cancelBtn.textContent = "Cancel";
+  cancelBtn.classList.add("delete-btn");
+  cancelBtn.textContent = "Delete";
 
   let completeBtn = document.createElement("button");
   completeBtn.classList.add("complete-btn");
