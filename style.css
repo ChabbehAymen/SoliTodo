@@ -65,12 +65,12 @@ main {
 }
 
 
-.todos .todo-item .items-btns .cancel-btn{
+.todos .todo-item .items-btns .delete-btn{
     background-color: #f08080;
     border: 1px solid lightcoral;
 }
 
-.todos .todo-item .items-btns .cancel-btn:hover{
+.todos .todo-item .items-btns .delete-btn:hover{
     box-shadow: 0 0 10px lightcoral;
 }
 
