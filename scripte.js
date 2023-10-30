@@ -1,34 +1,24 @@
-let prioritiesTasks = [];
-let allTasks = [];
-let completedTasks = [];
+let titleTextarea = document.querySelector('textarea[name="title-textarea"]');
+let discreptionTextarea = document.querySelector(
+  'textarea[name="description-textarea"]'
+);
+let startDay = document.querySelector("#start");
+let endDay = document.querySelector("#End");
+let prioritySwitch = document.querySelector('input[type="checkbox"]')
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
-  if (document.querySelector('input[type="checkbox"]').checked) {
-    prioritiesTasks.push(createTask());
+  if (prioritySwitch.checked) {
+    document.querySelector(".priority-todos").appendChild(createTask());
   } else {
-    allTasks.push(createTask());
+    document.querySelector(".all-todos").appendChild(createTask());
   }
-
-  updateUi();
 });
-
-function updateUi() {
-  let allTasksDiv = document.querySelector(".all-todos");
-  let prioritiesTasksDiv = document.querySelector(".priority-todos");
-  let completedTasksDiv = document.querySelector(".completed-todos");
-  allTasksDiv.innerHTML = "";
-  prioritiesTasksDiv.innerHTML = "";
-  completedTasks.innerHTML = "";
-  appendChildren(allTasksDiv, allTasks);
-  appendChildren(prioritiesTasksDiv, prioritiesTasks);
-  appendChildren(completedTasksDiv, completedTasks);
-}
 
 // creates tasks item
 function createTask() {
   let todoItemContainer = createTaskItemContainer();
   appendChildren(todoItemContainer, [
-    createItemHeader(),
+    createItemHeader(todoItemContainer),
     craeteItemDiscreption(),
     createTaskBtns(todoItemContainer),
   ]);
@@ -38,13 +28,12 @@ function createTask() {
 function createTaskItemContainer() {
   let container = document.createElement("div");
   container.classList.add("todo-item");
-  container.id = allTasks.length;
   return container;
 }
 
 // creates header of each task item
-function createItemHeader() {
-  let header = createHeader();
+function createItemHeader(parent) {
+  let header = createHeader(parent);
   let itemDetails = createHeaderDetailsContiner();
   appendChildren(itemDetails, [createHeaderTitle(), createHeaderDate()]);
 
@@ -53,11 +42,11 @@ function createItemHeader() {
   return header;
 }
 
-function createHeader() {
+function createHeader(parent) {
   let header = document.createElement("div");
   header.classList.add("item-header");
   header.addEventListener("click", () => {
-    console.log("modify()");
+    modify(parent);
   });
   return header;
 }
@@ -73,9 +62,7 @@ function createHeaderDetailsContiner() {
 }
 
 function getHeaderTitleText() {
-  return document.createTextNode(
-    document.querySelector('textarea[name="title-textarea"]').value
-  );
+  return document.createTextNode(titleTextarea.value);
 }
 
 function createHeaderTitle() {
@@ -86,9 +73,8 @@ function createHeaderTitle() {
 
 function getHeaderDateText() {
   return document.createTextNode(
-    `${document.querySelector("#start").value} | ${
-      document.querySelector("#End").value
-    }`
+    `${startDay.value} | 
+    ${endDay.value}`
   );
 }
 
@@ -106,9 +92,7 @@ function craeteItemDiscreption() {
 }
 
 function getTaskDiscText() {
-  return document.createTextNode(
-    document.querySelector('textarea[name="description-textarea"]').value
-  );
+  return document.createTextNode(discreptionTextarea.value);
 }
 
 // creates buttons of the task item
@@ -155,18 +139,28 @@ function appendChildren(container, children) {
 }
 
 function deleteTask(task) {
-  if (task.parentNode.classList[1] == "priority-todos")
-    prioritiesTasks.pop(task);
-  else if (task.parentNode.classList[1] == "all-todos") allTasks.pop(task);
-  else completedTasks.pop(task);
   task.parentNode.removeChild(task);
 }
 
 function completeTask(task) {
-  task.classList.add('completed-item')
-  completedTasks.push(task);
-  if (task.parentNode.classList[1] == "priority-todos")
-    prioritiesTasks.pop(task);
-  else if (task.parentNode.classList[1] == "all-todos") allTasks.pop(task);
-  updateUi();
+  deleteTask(task);
+  task.classList.add("completed-item");
+  let completedTasksDiv = document.querySelector(".completed-todos");
+  completedTasksDiv.appendChild(task);
+}
+
+function modify(task) {
+  titleTextarea.value = task.children[0].children[1].children[0].innerHTML;
+  discreptionTextarea.value = task.children[1].innerHTML;
+  startDay.value = task.children[0].children[1].children[1].innerHTML.slice(
+    0,
+    10
+  );
+  endDay.value = task.children[0].children[1].children[1].innerHTML.slice(-10);
+  if (task.parentNode.classList[1] == 'priority-todos') {
+    prioritySwitch.checked = true;
+  }else{
+    prioritySwitch.checked = false;
+  }
+  deleteTask(task);
 }

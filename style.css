@@ -24,6 +24,7 @@ main {
   border-radius: 7px;
   padding: 1.5%;
   margin-bottom: 3%;
+  transition: 1s;
 }
 
 .todos .todo-item .item-header {
@@ -226,7 +227,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(35px);
+  transform: translateX(1.6rem);
 }
 
 aside .aside-btns {
