@@ -2,24 +2,34 @@ let titleTextarea = document.querySelector('textarea[name="title-textarea"]');
 let discreptionTextarea = document.querySelector(
   'textarea[name="description-textarea"]'
 );
-let startDay = document.querySelector("#start");
-let endDay = document.querySelector("#End");
-let prioritySwitch = document.querySelector('input[type="checkbox"]')
+let startDate = document.querySelector("#start");
+let endDate = document.querySelector("#End");
+let prioritySwitch = document.querySelector('input[type="checkbox"]');
+let  errorMsg = document.querySelector('p');
+let emptyInputDates = startDate.value === "" || endDate.value === "";
+let unvalidDate = startDate.value.slice() > endDate.value.slice()
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
-  if (prioritySwitch.checked) {
-    document.querySelector(".priority-todos").appendChild(createTask());
-    clearInputFields();
-
+  if (titleTextarea.value === "" || discreptionTextarea.value === "") {
+    errorMsg.textContent = "Please enter a title and description.";
+  } else if (emptyInputDates) {
+    errorMsg.textContent = "Please enter a valid date.";
   } else {
-    document.querySelector(".all-todos").appendChild(createTask());
-    clearInputFields();
+    errorMsg.textContent = "";
+    if (prioritySwitch.checked) {
+      document.querySelector(".priority-todos").appendChild(createTask());
+      clearInputFields();
+    } else {
+      document.querySelector(".all-todos").appendChild(createTask());
+      clearInputFields();
+    }
   }
+  
 });
 
-document.querySelector('.aside-cancel-btn').addEventListener('click', ()=>{
+document.querySelector(".aside-cancel-btn").addEventListener("click", () => {
   clearInputFields();
-})
+});
 
 // creates tasks item
 function createTask() {
@@ -80,8 +90,8 @@ function createHeaderTitle() {
 
 function getHeaderDateText() {
   return document.createTextNode(
-    `${startDay.value} | 
-    ${endDay.value}`
+    `${startDate.value} | 
+    ${endDate.value}`
   );
 }
 
@@ -123,7 +133,7 @@ function createDeleteBtn(parent) {
   btn.classList.add("delete-btn");
   btn.textContent = "Delete";
   btn.addEventListener("click", () => {
-    parent.classList.add('delete-todo-item-animation')
+    parent.classList.add("delete-todo-item-animation");
     setTimeout(() => {
       deleteTask(parent);
     }, 400);
@@ -150,7 +160,6 @@ function appendChildren(container, children) {
 
 function deleteTask(task) {
   task.parentNode.removeChild(task);
-  
 }
 
 function completeTask(task) {
@@ -163,25 +172,25 @@ function completeTask(task) {
 function modify(task) {
   titleTextarea.value = task.children[0].children[1].children[0].innerHTML;
   discreptionTextarea.value = task.children[1].innerHTML;
-  startDay.value = task.children[0].children[1].children[1].innerHTML.slice(
+  startDate.value = task.children[0].children[1].children[1].innerHTML.slice(
     0,
     10
   );
-  endDay.value = task.children[0].children[1].children[1].innerHTML.slice(-10);
-  if (task.parentNode.classList[1] == 'priority-todos') {
+  endDate.value = task.children[0].children[1].children[1].innerHTML.slice(-10);
+  if (task.parentNode.classList[1] == "priority-todos") {
     prioritySwitch.checked = true;
-  }else{
+  } else {
     prioritySwitch.checked = false;
   }
   deleteTask(task);
 }
 
 function clearInputFields() {
-  document.querySelectorAll('textarea').forEach((area) => {
-    area.value = '';
+  document.querySelectorAll("textarea").forEach((area) => {
+    area.value = "";
   });
-  document.querySelectorAll('input').forEach((input) => {
-    input.value = '';
+  document.querySelectorAll("input").forEach((input) => {
+    input.value = "";
   });
   document.querySelector('input[type="checkbox"]').checked = false;
 }
