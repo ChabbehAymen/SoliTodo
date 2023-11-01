@@ -42,11 +42,15 @@
         <textarea name="title-textarea" cols="30" rows="10" placeholder="Title"></textarea><br>
         <textarea name="description-textarea" cols="30" rows="10" placeholder="Description"></textarea><br><br>
         <!--start date input-->
-        <label for="start date">Start date</label>
-        <input type="date" name="start date" id="start"><br><br>
+        <div>
+            <br><br><label for="start date">Start date</label>
+            <input type="date" name="start date" id="start"><br><br>
+        </div>
         <!--End date input-->
-        <label for="End">End date</label>
-        <input type="date" name="end-date" id="End">
+        <div>
+            <label for="End">End date</label>
+            <input type="date" name="end-date" id="End">
+        </div>
         <!--Priority-->
         <div class="priority-container">
             <h2>Priority:</h2>
@@ -56,6 +60,7 @@
                 <label for="toggle-btn" class="slider round"></label>
             </label>
         </div>
+        <p></p>
         <!-- Buttons -->
         <div class="aside-btns">
             <button class="aside-cancel-btn">Cancel</button>

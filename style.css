@@ -84,31 +84,29 @@ main {
 }
 
 .todo-item{
-  animation: showItem .4s ease-in;
+  animation: show-item-animation .4s ease-in;
+}
+
+.delete-todo-item-animation{
+  animation: delete-item-animation .4s ease-out;
 }
 
 .todos .todo-item :where(p, button, .items-btns) {
-  width: 50%;
   position: absolute;
   top: 0;
-  margin-top: -100%;
   opacity: 0;
-}
+  pointer-events: none;
 
-
-
-@keyframes showItem {
-  from{transform: translateX(70%);}
-  to{transform: translateX(0);}
 }
 
 .todo-item:hover :where(p, button, .items-btns) {
   position: relative;
   width: 100%;
   margin: 2% 0;
+  pointer-events: auto;
   opacity: 1;
   word-wrap: break-word;
-  overflow: auto;
+  transition: .5s;
 }
 
 /* this style will applay only for completed tasks */
@@ -124,9 +122,21 @@ main {
   text-decoration: line-through;
 }
 
+@keyframes show-item-animation {
+  from{transform: scaleX(0);}
+  to{transform: scaleX(1);}
+}
+
+@keyframes delete-item-animation {
+  from{transform: translateX(0);}
+  to{transform: translateX(100%);}
+}
+
 /* asside part */
 
 aside {
+  display: flex;
+  flex-direction: column;
   background-color: rgb(242, 242, 242);
   border-radius: 30px;
   width: 29%;
@@ -156,16 +166,23 @@ textarea {
   width: 100%;
   border-radius: 10px;
   padding: 2%;
+  resize: none;
+}
+
+textarea:focus {
+  outline: none;
+  border: 2px solid lightblue;
+  box-shadow: 0 0 5px lightgray;
 }
 
 textarea[name="title-textarea"] {
-  height: 10%;
+  height: 10vh;
   margin-bottom: 25px;
 }
 
 /*  Description input */
 textarea[name="description-textarea"] {
-  height: 20%;
+  height: 20vh;
 }
 
 /* used Flex to the swotch apear next to the h2 priority */
@@ -185,14 +202,21 @@ input[type="date"] {
   border: 1px solid #535252;
   padding: 1%;
   background-color: rgb(242, 242, 242);
-  height: 4%;
-  width: 30%;
+  height: 4vh;
+  width: 40%;
   margin-bottom: 2%;
 }
 
 .priority-container {
   margin-top: 5%;
-  margin-bottom: 35%;
+}
+
+/* Error Paragraph */
+aside p{
+  position: absolute;
+  top: 86%;
+  left: 46%;
+  color: red;
 }
 
 /* Switch styling */
@@ -240,19 +264,16 @@ input:checked + .slider:before {
   transform: translateX(1.6rem);
 }
 
-aside .aside-btns {
-  display: flex;
-  gap: 10%;
-  justify-content: center;
-}
-
 aside .aside-btns button {
+  position: absolute;
+  top: 93%;
   width: 40%;
   border-radius: 10px;
-  height: 3rem;
+  height: 2rem;
 }
 
 .aside-cancel-btn {
+  left: 10%;
   background-color: rgb(242, 242, 242);
   border-radius: 10px;
   width: 40%;
@@ -261,6 +282,7 @@ aside .aside-btns button {
 }
 
 .aside-save-btn {
+  left: 55%;
   background-color: lightblue;
   border: none;
   color: white;

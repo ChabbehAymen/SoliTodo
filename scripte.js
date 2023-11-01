@@ -9,10 +9,17 @@ let prioritySwitch = document.querySelector('input[type="checkbox"]')
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
   if (prioritySwitch.checked) {
     document.querySelector(".priority-todos").appendChild(createTask());
+    clearInputFields();
+
   } else {
     document.querySelector(".all-todos").appendChild(createTask());
+    clearInputFields();
   }
 });
+
+document.querySelector('.aside-cancel-btn').addEventListener('click', ()=>{
+  clearInputFields();
+})
 
 // creates tasks item
 function createTask() {
@@ -116,7 +123,10 @@ function createDeleteBtn(parent) {
   btn.classList.add("delete-btn");
   btn.textContent = "Delete";
   btn.addEventListener("click", () => {
-    deleteTask(parent);
+    parent.classList.add('delete-todo-item-animation')
+    setTimeout(() => {
+      deleteTask(parent);
+    }, 400);
   });
   return btn;
 }
@@ -140,6 +150,7 @@ function appendChildren(container, children) {
 
 function deleteTask(task) {
   task.parentNode.removeChild(task);
+  
 }
 
 function completeTask(task) {
@@ -163,4 +174,14 @@ function modify(task) {
     prioritySwitch.checked = false;
   }
   deleteTask(task);
+}
+
+function clearInputFields() {
+  document.querySelectorAll('textarea').forEach((area) => {
+    area.value = '';
+  });
+  document.querySelectorAll('input').forEach((input) => {
+    input.value = '';
+  });
+  document.querySelector('input[type="checkbox"]').checked = false;
 }
