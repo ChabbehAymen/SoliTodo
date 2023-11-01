@@ -123,8 +123,8 @@ main {
 }
 
 @keyframes show-item-animation {
-  from{transform: scaleX(0);}
-  to{transform: scaleX(1);}
+  from{transform: translateX(90%);}
+  to{transform: translateX(0);}
 }
 
 @keyframes delete-item-animation {
