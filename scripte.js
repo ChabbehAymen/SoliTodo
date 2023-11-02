@@ -114,7 +114,7 @@ function createEditBtn(task) {
   btn.appendChild(btnIcon);
   btn.addEventListener('click',()=>{
     if(task.id == 'on-edit') {
-      exitModifyMode(task);
+      saveModification(task);
       btnIcon.classList.add('fa-pen');
       btnIcon.classList.remove('fa-check');
     }
@@ -230,7 +230,7 @@ function modify(task) {
   document.querySelector('.aside-save-btn').classList.toggle('disable-style');
 }
 
-function exitModifyMode(task) {
+function saveModification(task) {
   task.id = '';
   document.querySelector('main').classList.toggle('set-focuse');
 
@@ -243,6 +243,7 @@ function exitModifyMode(task) {
   prioritySwitch.disabled = false;
   document.querySelector('.aside-cancel-btn').classList.toggle('disable-style');
   document.querySelector('.aside-save-btn').classList.toggle('disable-style');
+  clearInputFields();
 }
 
 function extractValueFromTaskToInput(task) {
