@@ -113,8 +113,16 @@ function createEditBtn(task) {
   btnIcon.classList.add("fa-pen");
   btn.appendChild(btnIcon);
   btn.addEventListener('click',()=>{
-    if(task.id == 'on-edit') task.id = '';
-    else modify(task);
+    if(task.id == 'on-edit') {
+      exitModifyMode(task);
+      btnIcon.classList.add('fa-pen');
+      btnIcon.classList.remove('fa-check');
+    }
+    else {
+      modify(task);
+      btnIcon.classList.remove('fa-pen');
+      btnIcon.classList.add('fa-check');
+    }
   });
   return btn
 }
@@ -214,27 +222,30 @@ function completeTask(task) {
 
 function modify(task) {
   task.id = 'on-edit';
-  extractValueFromInputs(task);
-  titleTextarea.addEventListener('keyup', ()=>{
-    task.children[0].children[1].children[0].children[0].innerHTML = titleTextarea.value;
+  document.querySelector('main').classList.toggle('set-focuse');
+  extractValueFromTaskToInput(task);
 
-  });
-  discreptionTextarea.addEventListener('keyup', ()=>{
-    task.children[1].innerHTML = discreptionTextarea.value;
-  });
-  startDate.addEventListener('keyup', ()=>{
-    task.children[0].children[1].children[1].innerHTML.slice(
-      0,
-      10
-    ) = startDate.value;
-  });
-  endDate.addEventListener('keyup',()=>{
-    task.children[0].children[1].children[1].innerHTML.slice(-10) = endDate.value;
-  });
-
+  prioritySwitch.disabled = true;
+  document.querySelector('.aside-cancel-btn').classList.toggle('disable-style');
+  document.querySelector('.aside-save-btn').classList.toggle('disable-style');
 }
 
-function extractValueFromInputs(task) {
+function exitModifyMode(task) {
+  task.id = '';
+  document.querySelector('main').classList.toggle('set-focuse');
+
+
+  task.children[0].children[1].children[0].children[0].innerHTML = titleTextarea.value;
+  task.children[1].innerHTML = discreptionTextarea.value;
+  task.children[0].children[1].children[1].innerHTML= `${startDate.value} | ${endDate.value}`;
+
+  
+  prioritySwitch.disabled = false;
+  document.querySelector('.aside-cancel-btn').classList.toggle('disable-style');
+  document.querySelector('.aside-save-btn').classList.toggle('disable-style');
+}
+
+function extractValueFromTaskToInput(task) {
   titleTextarea.value = task.children[0].children[1].children[0].children[0].innerHTML;
   discreptionTextarea.value = task.children[1].innerHTML;
   startDate.value = task.children[0].children[1].children[1].innerHTML.slice(

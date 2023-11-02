@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.disable-style{
+  filter: grayscale(100%);
+  pointer-events: none;
+}
+
 body {
   display: flex;
   font-family: "Inter", sans-serif;
@@ -102,6 +107,31 @@ main {
 
 .todo-item{
   animation: show-item-animation .4s ease-in;
+}
+
+#on-edit{
+  position: fixed;
+  background-color: white;
+  width: 60%;
+  top: 50%;
+}
+
+#on-edit::before{
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70%;
+  overflow: visible;
+  z-index: -1;
+  backdrop-filter: blur(2px);
+}
+
+
+#on-edit .items-btns button{
+  filter: grayscale(100%);
+  pointer-events: none;
 }
 
 .delete-todo-item-animation{
