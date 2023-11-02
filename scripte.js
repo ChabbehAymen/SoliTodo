@@ -113,7 +113,8 @@ function createEditBtn(task) {
   btnIcon.classList.add("fa-pen");
   btn.appendChild(btnIcon);
   btn.addEventListener('click',()=>{
-    modify(task)
+    if(task.id == 'on-edit') task.id = '';
+    else modify(task);
   });
   return btn
 }
@@ -212,6 +213,28 @@ function completeTask(task) {
 }
 
 function modify(task) {
+  task.id = 'on-edit';
+  extractValueFromInputs(task);
+  titleTextarea.addEventListener('keyup', ()=>{
+    task.children[0].children[1].children[0].children[0].innerHTML = titleTextarea.value;
+
+  });
+  discreptionTextarea.addEventListener('keyup', ()=>{
+    task.children[1].innerHTML = discreptionTextarea.value;
+  });
+  startDate.addEventListener('keyup', ()=>{
+    task.children[0].children[1].children[1].innerHTML.slice(
+      0,
+      10
+    ) = startDate.value;
+  });
+  endDate.addEventListener('keyup',()=>{
+    task.children[0].children[1].children[1].innerHTML.slice(-10) = endDate.value;
+  });
+
+}
+
+function extractValueFromInputs(task) {
   titleTextarea.value = task.children[0].children[1].children[0].children[0].innerHTML;
   discreptionTextarea.value = task.children[1].innerHTML;
   startDate.value = task.children[0].children[1].children[1].innerHTML.slice(
@@ -224,7 +247,6 @@ function modify(task) {
   } else {
     prioritySwitch.checked = false;
   }
-  deleteTask(task);
 }
 
 function clearInputFields() {
