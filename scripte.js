@@ -5,17 +5,28 @@ let discreptionTextarea = document.querySelector(
 let startDate = document.querySelector("#start");
 let endDate = document.querySelector("#End");
 let prioritySwitch = document.querySelector('input[type="checkbox"]');
-let  errorMsg = document.querySelector('p');
-let emptyInputDates = startDate.value === "" || endDate.value === "";
-let unvalidDate = startDate.value.slice() > endDate.value.slice()
+let errorMsg = document.querySelector("p");
+const saveButton = document.querySelector(".aside-save-btn");
+const loader = document.querySelector("#loader");
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
   if (titleTextarea.value === "" || discreptionTextarea.value === "") {
     errorMsg.textContent = "Please enter a title and description.";
-  } else if (emptyInputDates) {
+  } else if (  emptyDate() || unvalideDate() ) {
     errorMsg.textContent = "Please enter a valid date.";
   } else {
     errorMsg.textContent = "";
+    saveButton.style.color = "transparent";
+    loader.style.display = "inline-block";
+    saveButton.style.zIndex = "0";
+    // dealy the execution untill the animation ends
+    setTimeout(() => {
+      loader.style.display = "none";
+      saveButton.style.zIndex = "1";
+
+      saveButton.style.color = "white";
+    }, 800);
+    // add the item to it's container
     if (prioritySwitch.checked) {
       document.querySelector(".priority-todos").appendChild(createTask());
       clearInputFields();
@@ -24,8 +35,15 @@ document.querySelector(".aside-save-btn").addEventListener("click", () => {
       clearInputFields();
     }
   }
-  
 });
+
+function emptyDate() {
+  return startDate.value === "" || endDate.value === "";
+}
+
+function unvalideDate() {
+  return (startDate.value.slice(-2) > endDate.value.slice(-2)) || (startDate.value.slice(5, -3) > endDate.value.slice(5, -3));
+}
 
 document.querySelector(".aside-cancel-btn").addEventListener("click", () => {
   clearInputFields();
@@ -50,21 +68,18 @@ function createTaskItemContainer() {
 
 // creates header of each task item
 function createItemHeader(parent) {
-  let header = createHeader(parent);
+  let header = createHeader();
   let itemDetails = createHeaderDetailsContiner();
-  appendChildren(itemDetails, [createHeaderTitle(), createHeaderDate()]);
+  appendChildren(itemDetails, [createHeaderTitle(parent), createHeaderDate()]);
 
   appendChildren(header, [createHeaderIndicator(), itemDetails]);
 
   return header;
 }
 
-function createHeader(parent) {
+function createHeader() {
   let header = document.createElement("div");
   header.classList.add("item-header");
-  header.addEventListener("click", () => {
-    modify(parent);
-  });
   return header;
 }
 
@@ -82,7 +97,28 @@ function getHeaderTitleText() {
   return document.createTextNode(titleTextarea.value);
 }
 
-function createHeaderTitle() {
+function createHeaderTitle(parent) {
+  let headerTitelContainer = document.createElement('div');
+  headerTitelContainer.classList.add('title-div');
+  appendChildren(headerTitelContainer, [createHeaderTitleText(),createEditBtn(parent)])
+  return headerTitelContainer;
+  
+}
+
+function createEditBtn(task) {
+  let btn = document.createElement('button');
+  btn.classList.add('modify-btn');
+  let btnIcon = document.createElement('i');
+  btnIcon.classList.add('fa');
+  btnIcon.classList.add("fa-pen");
+  btn.appendChild(btnIcon);
+  btn.addEventListener('click',()=>{
+    modify(task)
+  });
+  return btn
+}
+
+function createHeaderTitleText(){
   let title = document.createElement("h3");
   title.appendChild(getHeaderTitleText());
   return title;
@@ -131,7 +167,10 @@ function createTaskBtnsContainer() {
 function createDeleteBtn(parent) {
   let btn = document.createElement("button");
   btn.classList.add("delete-btn");
-  btn.textContent = "Delete";
+  let btnIcon = document.createElement('i');
+  btnIcon.classList.add('fa');
+  btnIcon.classList.add('fa-trash');
+  btn.appendChild(btnIcon);
   btn.addEventListener("click", () => {
     parent.classList.add("delete-todo-item-animation");
     setTimeout(() => {
@@ -144,7 +183,10 @@ function createDeleteBtn(parent) {
 function createCompleteBtn(parent) {
   let btn = document.createElement("button");
   btn.classList.add("complete-btn");
-  btn.textContent = "Complete";
+  let btnIcon = document.createElement('i');
+  btnIcon.classList.add('fa');
+  btnIcon.classList.add('fa-check');
+  btn.appendChild(btnIcon);
   btn.addEventListener("click", () => {
     completeTask(parent);
   });
@@ -170,7 +212,7 @@ function completeTask(task) {
 }
 
 function modify(task) {
-  titleTextarea.value = task.children[0].children[1].children[0].innerHTML;
+  titleTextarea.value = task.children[0].children[1].children[0].children[0].innerHTML;
   discreptionTextarea.value = task.children[1].innerHTML;
   startDate.value = task.children[0].children[1].children[1].innerHTML.slice(
     0,

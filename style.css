@@ -40,9 +40,26 @@ main {
   border-radius: 2rem;
 }
 
-.todos .todo-item .item-header .item-details h3 {
+.todos .todo-item .item-header .item-details .title-div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2%;
+  width: 100%;
+}
+
+.todos .todo-item .item-header .item-details .title-div .modify-btn{
+  border: 0;
+  color: black;
+  background-color: white;
+}
+
+.todos .todo-item .item-header .item-details{
+  width: 100%;
+}
+
+.todos .todo-item .item-header .item-details .title-div h3 {
   margin: 0;
-  margin-bottom: 5%;
 }
 
 .todos .todo-item .item-header .item-details h4 {
@@ -91,7 +108,7 @@ main {
   animation: delete-item-animation .4s ease-out;
 }
 
-.todos .todo-item :where(p, button, .items-btns) {
+.todos .todo-item :where(p, .items-btns button, .items-btns) {
   position: absolute;
   top: 0;
   opacity: 0;
@@ -99,7 +116,7 @@ main {
 
 }
 
-.todo-item:hover :where(p, button, .items-btns) {
+.todo-item:hover :where(p, .items-btns button, .items-btns) {
   position: relative;
   width: 100%;
   margin: 2% 0;
@@ -286,4 +303,21 @@ aside .aside-btns button {
   background-color: lightblue;
   border: none;
   color: white;
+}
+
+#loader {
+  border: 4px solid #ffffff;
+  border-top: 4px solid lightblue;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: none;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+  margin-left: 4px; 
+}
+
+ @keyframes spin{
+ 0%{ transform: rotate(0deg);}
+ 100%{ transform: rotate(360deg);}
 }
