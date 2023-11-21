@@ -1,3 +1,5 @@
+import { clearInputFields } from "../assets";
+
 customElements.define(
   "todo-task",
   class TodoTask extends HTMLElement {
@@ -26,58 +28,71 @@ customElements.define(
       </div>
       </div>
       `;
-      this.modifyBtnClickListener();
+      this.querySelector(".modify-btn").addEventListener("click", () => {
+        if (this.id == "on-edit") {
+          this.id = "";
+          document.querySelector("main").classList.toggle("set-focuse");
+          this.querySelector("h3").innerText = document.querySelector(
+            'textarea[name="title-textarea"]'
+          ).value;
+
+          this.querySelector("h4").innerText = `${
+            document.querySelector("#start").value
+          } | ${document.querySelector("#End").value}`;
+          this.querySelector("p").innerText = document.querySelector(
+            'textarea[name="description-textarea"]'
+          ).value;
+
+          document.querySelector('input[type="checkbox"]').disabled = false;
+          document
+            .querySelector(".aside-cancel-btn")
+            .classList.toggle("disable-style");
+          document
+            .querySelector(".aside-save-btn")
+            .classList.toggle("disable-style");
+        this.querySelector(".modify-btn i").classList.remove("fa-check");
+        this.querySelector(".modify-btn i").classList.add("fa-pen");
+        } else {
+          this.id = "on-edit";
+          document.querySelector("main").classList.toggle("set-focuse");
+          document.querySelector('input[type="checkbox"]').disabled = true;
+          document
+            .querySelector(".aside-cancel-btn")
+            .classList.toggle("disable-style");
+          document
+            .querySelector(".aside-save-btn")
+            .classList.toggle("disable-style");
+          this.querySelector(".modify-btn i").classList.remove("fa-pen");
+          this.querySelector(".modify-btn i").classList.add("fa-check");
+        }
+      });
+
       this.deleteBtnClickListener();
       this.completeBtnClickListener();
       this.saveModification();
     }
 
-    modifyBtnClickListener() {
-      this.querySelector(".modify-btn").addEventListener("click", () => {
-        if (this.id == "on-edit") {
-          this.saveModification();
-          this.querySelector(".modify-btn i").classList.remove("fa-check");
-          this.querySelector(".modify-btn i").classList.add("fa-pen");
-        } else {
-          modify(this);
-          this.querySelector(".modify-btn i").classList.remove("fa-pen");
-          this.querySelector(".modify-btn i").classList.add("fa-check");
-        }
-      });
+    onModify() {
+      if (this.id == "on-edit") {
+      }
     }
 
     deleteBtnClickListener() {
       this.querySelector(".delete-btn").addEventListener("click", () => {
         this.classList.add("delete-todo-item-animation");
         setTimeout(() => {
-          deleteTask();
+          this.deleteTask();
         }, 400);
       });
     }
 
     completeBtnClickListener() {
       this.querySelector(".complete-btn").addEventListener("click", () => {
-        completeTask();
+        this.completeTask();
       });
     }
 
     saveModification() {
-      this.id = "";
-      document.querySelector("main").classList.toggle("set-focuse");
-
-      this.querySelector("h3").innerText = titleTextarea.value;
-      this.querySelector(
-        "h4"
-      ).innerText = `${startDate.value} | ${endDate.value}`;
-      this.querySelector("p").innerText = descriptionTextarea.value;
-
-      prioritySwitch.disabled = false;
-      document
-        .querySelector(".aside-cancel-btn")
-        .classList.toggle("disable-style");
-      document
-        .querySelector(".aside-save-btn")
-        .classList.toggle("disable-style");
       clearInputFields();
     }
 
@@ -86,20 +101,13 @@ customElements.define(
     }
 
     completeTask() {
-        deleteTask(task);
-        this.classList.add("completed-item");
-        let completedTasksDiv = document.querySelector(".completed-todos");
-        completedTasksDiv.appendChild(this);
-      }
-      
-      modify() {
-        this.id = "on-edit";
-        document.querySelector("main").classList.toggle("set-focuse");
-        // extractValueFromTaskToInput(task);
-      
-        // prioritySwitch.disabled = true;
-        document.querySelector(".aside-cancel-btn").classList.toggle("disable-style");
-        document.querySelector(".aside-save-btn").classList.toggle("disable-style");
-      }
+      this.classList.add("completed-item");
+      let completedTasksDiv = document.querySelector(".completed-todos");
+      completedTasksDiv.appendChild(this);
+    }
+
+    modify() {
+      // extractValueFromTaskToInput(task);
+    }
   }
 );

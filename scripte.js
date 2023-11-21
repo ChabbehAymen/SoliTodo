@@ -4,6 +4,7 @@ let titleTextarea = document.querySelector('textarea[name="title-textarea"]');
 let descriptionTextarea = document.querySelector(
   'textarea[name="description-textarea"]'
 );
+// TODO Edite my ex partner HTML, CSS and JS 
 let startDate = document.querySelector("#start");
 let endDate = document.querySelector("#End");
 let prioritySwitch = document.querySelector('input[type="checkbox"]');
