@@ -1,16 +1,22 @@
-
+/*
+ *
+ */
+import { clearInputFields } from "./assets/ClearInputFields.mjs";
+import TodoTask from "./components/TodoTask.mjs";
 
 let titleTextarea = document.querySelector('textarea[name="title-textarea"]');
 let descriptionTextarea = document.querySelector(
   'textarea[name="description-textarea"]'
 );
-// TODO Edite my ex partner HTML, CSS and JS 
+// TODO Clean my ex partner HTML, CSS and JS
 let startDate = document.querySelector("#start");
 let endDate = document.querySelector("#End");
 let prioritySwitch = document.querySelector('input[type="checkbox"]');
 let errorMsg = document.querySelector("p");
 const saveButton = document.querySelector(".aside-save-btn");
 const loader = document.querySelector("#loader");
+// defining my custem element
+customElements.define("todo-task", TodoTask);
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
   if (titleTextarea.value === "" || descriptionTextarea.value === "") {
@@ -22,7 +28,6 @@ document.querySelector(".aside-save-btn").addEventListener("click", () => {
     saveButton.style.color = "transparent";
     loader.style.display = "inline-block";
     saveButton.style.zIndex = "0";
-    // dealy the execution untill the animation ends
     setTimeout(() => {
       loader.style.display = "none";
       saveButton.style.zIndex = "1";
@@ -57,47 +62,19 @@ document.querySelector(".aside-cancel-btn").addEventListener("click", () => {
 
 // creates tasks item
 function createTask() {
-  let todoItemContainer = document.createElement("todo-task");
-  let title = titleTextarea.value;
-  let description = descriptionTextarea.value;
-  let startDateText = startDate.value;
-  let endDateText = endDate.value;
-  setAttributes(
-    todoItemContainer,
+  let todoItem = document.createElement("todo-task");
+  todoItem.setAttributes(
     ["title", "description", "start-date", "end-date"],
-    [title, description, startDateText, endDateText]
+    [titleTextarea.value, descriptionTextarea.value, startDate.value, endDate.value]
   );
 
-  return todoItemContainer;
+  return todoItem;
 }
 
 // this function will be used when a node will append more than one childe
-function setAttributes(item, attributes, values) {
-  for (let i = 0; i < attributes.lenght; i++) {
+window.HTMLElement.prototype.setAttributes = function (attributes, values) {
+  for (let i = 0; i < attributes.length; i++) {
     console.log(`${attributes[i]}="${values[i]}"`);
-    item.setAttribute(attributes[i], values[i]);
+    this.setAttribute(attributes[i], values[i]);
   }
-}
-
-
-function extractValueFromTaskToInput(task) {
-  titleTextarea.value = task.querySelector("h3").innerText;
-  descriptionTextarea.value = task.querySelector("p").innerText;
-  startDate.value = task.querySelector("h4").innerText.slice(0, 10);
-  endDate.value = task.querySelector("h4").innerText.slice(-10);
-  if (task.parentNode.classList[1] == "priority-todos") {
-    prioritySwitch.checked = true;
-  } else {
-    prioritySwitch.checked = false;
-  }
-}
-
-function clearInputFields() {
-  document.querySelectorAll("textarea").forEach((area) => {
-    area.value = "";
-  });
-  document.querySelectorAll("input").forEach((input) => {
-    input.value = "";
-  });
-  document.querySelector('input[type="checkbox"]').checked = false;
 }

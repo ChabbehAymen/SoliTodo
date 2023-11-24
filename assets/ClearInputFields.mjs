@@ -1,3 +1,7 @@
+/*
+*This function was exported as module because of reduce duplication of code(DON'T REPEATE UR SELF)
+*this function is used in the TodoTask class and main scripte file
+*/  
 export function clearInputFields() {
   document.querySelectorAll("textarea").forEach((area) => {
     area.value = "";
