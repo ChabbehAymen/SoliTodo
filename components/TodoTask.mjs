@@ -1,8 +1,9 @@
-import { clearInputFields } from "../assets/ClearInputFields.mjs";
+import { InputsHandler } from "../assets/InputsHandler.mjs";
 
 export default class TodoTask extends HTMLElement {
   constructor() {
     super();
+    this.inputsHnadler = new InputsHandler();
   }
   connectedCallback() {
     this.innerHTML = `
@@ -30,18 +31,15 @@ export default class TodoTask extends HTMLElement {
       if (this.id == "on-edit") {
         this.id = "";
         document.querySelector("main").classList.toggle("set-focuse");
-        this.querySelector("h3").innerText = document.querySelector(
-          'textarea[name="title-textarea"]'
-        ).value;
 
-        this.querySelector("h4").innerText = `${
-          document.querySelector("#start").value
-        } | ${document.querySelector("#End").value}`;
-        this.querySelector("p").innerText = document.querySelector(
-          'textarea[name="description-textarea"]'
-        ).value;
+        this.querySelector("h3").innerText = this.inputsHnadler.getTitle;
 
-        document.querySelector('input[type="checkbox"]').disabled = false;
+        this.querySelector("h4").innerText = `${this.inputsHnadler.getStartDate} 
+        | ${this.inputsHnadler.getEndDate}`;
+
+        this.querySelector("p").innerText = this.inputsHnadler.getDiscreption
+
+        this.inputsHnadler.inablePrioritySwitch(false);
         document
           .querySelector(".aside-cancel-btn")
           .classList.toggle("disable-style");
@@ -50,11 +48,13 @@ export default class TodoTask extends HTMLElement {
           .classList.toggle("disable-style");
         this.querySelector(".modify-btn i").classList.remove("fa-check");
         this.querySelector(".modify-btn i").classList.add("fa-pen");
-        clearInputFields();
+        this.inputsHnadler.clearInputs();
       } else {
         this.id = "on-edit";
         document.querySelector("main").classList.toggle("set-focuse");
-        document.querySelector('input[type="checkbox"]').disabled = true;
+        // TODO now use the setters
+        this.inputsHnadler.setTitle = this.querySelector('h3').innerText;
+        this.inputsHnadler.inablePrioritySwitch(true);
         document
           .querySelector(".aside-cancel-btn")
           .classList.toggle("disable-style");

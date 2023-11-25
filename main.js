@@ -1,17 +1,11 @@
 /*
  *
  */
-import { clearInputFields } from "./assets/ClearInputFields.mjs";
+import { InputsHandler } from "./assets/InputsHandler.mjs";
 import TodoTask from "./components/TodoTask.mjs";
 
-let titleTextarea = document.querySelector('textarea[name="title-textarea"]');
-let descriptionTextarea = document.querySelector(
-  'textarea[name="description-textarea"]'
-);
-// TODO Clean my ex partner HTML, CSS and JS
-let startDate = document.querySelector("#start");
-let endDate = document.querySelector("#End");
-let prioritySwitch = document.querySelector('input[type="checkbox"]');
+
+let inputsHandler = new InputsHandler();//! ToDo
 let errorMsg = document.querySelector("p");
 const saveButton = document.querySelector(".aside-save-btn");
 const loader = document.querySelector("#loader");
@@ -19,7 +13,7 @@ const loader = document.querySelector("#loader");
 customElements.define("todo-task", TodoTask);
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
-  if (titleTextarea.value === "" || descriptionTextarea.value === "") {
+  if (inputsHandler.getTitle == '' || inputsHandler.getDiscreption == '') {
     errorMsg.textContent = "Please enter a title and description.";
   } else if (emptyDate() || unvalideDate()) {
     errorMsg.textContent = "Please enter a valid date.";
@@ -35,29 +29,29 @@ document.querySelector(".aside-save-btn").addEventListener("click", () => {
       saveButton.style.color = "white";
     }, 800);
     // add the item to it's container
-    if (prioritySwitch.checked) {
+    if (inputsHandler.isPriority) {
       document.querySelector(".priority-todos").appendChild(createTask());
-      clearInputFields();
+      inputsHandler.clearInputs();
     } else {
       document.querySelector(".all-todos").appendChild(createTask());
-      clearInputFields();
+      inputsHandler.clearInputs();
     }
   }
 });
 
 function emptyDate() {
-  return startDate.value === "" || endDate.value === "";
+  return inputsHandler.getStartDate === "" || inputsHandler.getEndDate === "";
 }
 
 function unvalideDate() {
   return (
-    startDate.value.slice(-2) > endDate.value.slice(-2) ||
-    startDate.value.slice(5, -3) > endDate.value.slice(5, -3)
+    inputsHandler.getStartDate.slice(-2) > inputsHandler.getEndDate.slice(-2) ||
+    inputsHandler.getStartDate.slice(5, -3) > inputsHandler.getEndDate.slice(5, -3)
   );
 }
 
 document.querySelector(".aside-cancel-btn").addEventListener("click", () => {
-  clearInputFields();
+      inputsHandler.clearInputs();
 });
 
 // creates tasks item
@@ -65,7 +59,7 @@ function createTask() {
   let todoItem = document.createElement("todo-task");
   todoItem.setAttributes(
     ["title", "description", "start-date", "end-date"],
-    [titleTextarea.value, descriptionTextarea.value, startDate.value, endDate.value]
+    [inputsHandler.getTitle, inputsHandler.getDiscreption, inputsHandler.startDate, inputsHandler.endDate]
   );
 
   return todoItem;
