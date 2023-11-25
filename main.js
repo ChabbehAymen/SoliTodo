@@ -39,17 +39,6 @@ document.querySelector(".aside-save-btn").addEventListener("click", () => {
   }
 });
 
-function emptyDate() {
-  return inputsHandler.getStartDate === "" || inputsHandler.getEndDate === "";
-}
-
-function unvalideDate() {
-  return (
-    inputsHandler.getStartDate.slice(-2) > inputsHandler.getEndDate.slice(-2) ||
-    inputsHandler.getStartDate.slice(5, -3) > inputsHandler.getEndDate.slice(5, -3)
-  );
-}
-
 document.querySelector(".aside-cancel-btn").addEventListener("click", () => {
       inputsHandler.clearInputs();
 });
