@@ -5,20 +5,20 @@ import { InputsHandler } from "./assets/InputsHandler.mjs";
 import TodoTask from "./components/TodoTask.mjs";
 
 
-let inputsHandler = new InputsHandler();//! ToDo
-let errorMsg = document.querySelector("p");
+let inputsHandler = new InputsHandler();
+let errorMsgHolder = document.querySelector("p");
 const saveButton = document.querySelector(".aside-save-btn");
 const loader = document.querySelector("#loader");
 // defining my custem element
 customElements.define("todo-task", TodoTask);
 
 document.querySelector(".aside-save-btn").addEventListener("click", () => {
-  if (inputsHandler.getTitle == '' || inputsHandler.getDiscreption == '') {
-    errorMsg.textContent = "Please enter a title and description.";
-  } else if (emptyDate() || unvalideDate()) {
-    errorMsg.textContent = "Please enter a valid date.";
+  if (!inputsHandler.isTitleAndDescriptionValide()) {
+    errorMsgHolder.textContent = "Please enter a title and description.";
+  } else if (!inputsHandler.isDatesValide()) {
+    errorMsgHolder.textContent = "Please enter a valid date.";
   } else {
-    errorMsg.textContent = "";
+    errorMsgHolder.textContent = "";
     saveButton.style.color = "transparent";
     loader.style.display = "inline-block";
     saveButton.style.zIndex = "0";

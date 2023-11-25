@@ -40,6 +40,23 @@ export class InputsHandler {
     this.#prioritySwitch.disabled = bool;
   }
 
+  isTitleAndDescriptionValide(){
+    return this.#titleInput.value != ''&& this.#discreptionInput.value != '';
+  }
+
+  isDatesValide(){
+    return this.#datesNotEmpty() || this.#datesValueValide();
+  }
+
+  #datesNotEmpty(){
+    return this.#startDateInput.value != "" || this.#endDateInput.value != "";
+  }
+
+  #datesValueValide(){
+    return !this.#startDateInput.value.slice(-2) > this.#endDateInput.value.slice(-2) ||
+    !this.#startDateInput.value.slice(5, -3) > this.#endDateInput.value.slice(5, -3)
+  }
+
   clearInputs(){
     this.#titleInput.value ='';
     this.#discreptionInput.value ='';
