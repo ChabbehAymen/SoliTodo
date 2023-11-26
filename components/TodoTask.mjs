@@ -1,4 +1,5 @@
 import { InputsHandler } from "../assets/InputsHandler.mjs";
+import storageHandler from "../data/StorageHandler.mjs";
 
 export default class TodoTask extends HTMLElement {
   constructor() {
@@ -6,6 +7,7 @@ export default class TodoTask extends HTMLElement {
     this.inputsHnadler = new InputsHandler();
   }
   connectedCallback() {
+    this.uid = this.getAttribute('uid');
     this.innerHTML = `
       <div class="todo-item">
       <div class="item-header">
@@ -27,17 +29,19 @@ export default class TodoTask extends HTMLElement {
       </div>
       </div>
       `;
+      let titleView = this.querySelector("h3");
+      let dateView = this.querySelector("h4");
+      let descriptionView = this.querySelector("p");
     this.querySelector(".modify-btn").addEventListener("click", () => {
       if (this.id == "on-edit") {
         this.id = "";
         document.querySelector("main").classList.toggle("set-focuse");
 
-        this.querySelector("h3").innerText = this.inputsHnadler.getTitle;
+        titleView.innerText = this.inputsHnadler.getTitle;
 
-        this.querySelector("h4").innerText = `${this.inputsHnadler.getStartDate} 
-        | ${this.inputsHnadler.getEndDate}`;
+        dateView.innerText = `${this.inputsHnadler.getStartDate} | ${this.inputsHnadler.getEndDate}`;
 
-        this.querySelector("p").innerText = this.inputsHnadler.getDiscreption
+        descriptionView.innerText = this.inputsHnadler.getDiscreption;
 
         this.inputsHnadler.inablePrioritySwitch(false);
         document
@@ -48,12 +52,15 @@ export default class TodoTask extends HTMLElement {
           .classList.toggle("disable-style");
         this.querySelector(".modify-btn i").classList.remove("fa-check");
         this.querySelector(".modify-btn i").classList.add("fa-pen");
+        storageHandler.updateModifiedTask(this.#getTaskObject());
         this.inputsHnadler.clearInputs();
       } else {
         this.id = "on-edit";
         document.querySelector("main").classList.toggle("set-focuse");
-        // TODO now use the setters
-        this.inputsHnadler.setTitle = this.querySelector('h3').innerText;
+        this.inputsHnadler.setTitle = titleView.innerText;
+        this.inputsHnadler.setDiscreption = descriptionView.innerText;
+        this.inputsHnadler.setStartDate = dateView.innerText.slice(0,10);
+        this.inputsHnadler.setEndDate = dateView.innerText.slice(-10);
         this.inputsHnadler.inablePrioritySwitch(true);
         document
           .querySelector(".aside-cancel-btn")
@@ -66,17 +73,14 @@ export default class TodoTask extends HTMLElement {
       }
     });
 
-    this.deleteBtnClickListener();
-    this.completeBtnClickListener();
-  }
-
-  deleteBtnClickListener() {
     this.querySelector(".delete-btn").addEventListener("click", () => {
       this.classList.add("delete-todo-item-animation");
       setTimeout(() => {
+        storageHandler.deleteItemFromStorage(this.uid);
         this.deleteTask();
       }, 400);
     });
+    this.completeBtnClickListener();
   }
 
   completeBtnClickListener() {
@@ -95,4 +99,20 @@ export default class TodoTask extends HTMLElement {
     completedTasksDiv.appendChild(this);
   }
 
+  #getTaskObject(){
+    return{
+      id: `${this.uid}`,
+      title: this.inputsHnadler.getTitle,
+      discreption: this.inputsHnadler.getDiscreption,
+      startDate: this.inputsHnadler.getStartDate,
+      endDate: this.inputsHnadler.getEndDate,
+      isCompleted: false,
+      isPriority: storageHandler.getItemById(this.uid).isPriority}
+  }
+
+  setAttributes(attributes, values){
+  for (let i = 0; i < attributes.length; i++) {
+    this.setAttribute(attributes[i], values[i]);
+  }
+  }
 }

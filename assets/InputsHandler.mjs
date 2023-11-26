@@ -4,8 +4,7 @@ export class InputsHandler {
     #prioritySwitch = document.querySelector('input[type="checkbox"]');
     #startDateInput = document.querySelector("#start");
     #endDateInput = document.querySelector("#End");
-  constructor() {
-  }
+
   get getTitle() {
     return this.#titleInput.value;
   }
